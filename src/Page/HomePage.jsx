@@ -16,6 +16,7 @@ const HomePage = () => {
             setItems(arr)
             setIsLoaded(false)
         })
+        window.scroll(0,0)
     }, [])
     return (
         <div className="container">

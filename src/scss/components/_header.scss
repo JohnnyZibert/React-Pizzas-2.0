@@ -4,10 +4,23 @@
   border-bottom: 1px solid $gray-line;
   padding: 40px 0;
 
+
+
   .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    @media (max-width: 640px) {
+      flex-direction: column;
+
+     .header__logo{
+       margin-bottom: 20px;
+       flex-direction: column;
+       text-align: center;
+       align-items: center;
+     }
+    }
   }
 
   &__logo {

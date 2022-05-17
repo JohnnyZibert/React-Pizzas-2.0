@@ -1,4 +1,3 @@
-import {image} from "../assets/img";
 import {NavLink} from "react-router-dom";
 
 const Cart = () => {
