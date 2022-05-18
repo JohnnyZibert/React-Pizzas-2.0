@@ -1,17 +1,17 @@
 import React from "react";
 
-const Categories = () => {
+const Categories = ({categoriesId,onClickSetCategories}) => {
     const categoriesPizzas = ['Все','Мясные','Вегетарианская','Гриль','Острые','Закрытые']
-    const [categoriesActive,setCategoriesActive] = React.useState(0)
+
 
     return (
         <div className="categories">
             <ul>
                 {
-                    categoriesPizzas.map((categoriesPizzas,i)=><li
+                    categoriesPizzas.map((categoriesName,i)=><li
                     key={i}
-                    onClick={()=>setCategoriesActive(i)}
-                    className={categoriesActive === i ? 'active' : ''}>{categoriesPizzas}</li>)
+                    onClick={()=>onClickSetCategories(i)}
+                    className={categoriesId === i ? 'active' : ''}>{categoriesName}</li>)
                 }
             </ul>
         </div>

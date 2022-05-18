@@ -10,13 +10,14 @@ import NotFound from "./components/NotFound/NotFound";
 
 
 function App() {
+    const [searchValue, setSearchValue] = React.useState('')
 
     return (
         <div className="wrapper">
-            <Header/>
+            <Header searchValue={searchValue} setSearchValue={setSearchValue}/>
             <div className="content">
                 <Routes>
-                    <Route path='/' element={<HomePage/>}/>
+                    <Route path='/' element={<HomePage searchValue={searchValue}/>}/>
                     <Route path='/cart' element={<Cart/>}/>
                     <Route path='/emptyCart' element={<EmptyCart/>}/>
                     <Route path='*' element={<NotFound/>}/>
