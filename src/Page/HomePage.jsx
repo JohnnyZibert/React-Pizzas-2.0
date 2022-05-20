@@ -1,18 +1,22 @@
-import React from "react";
+import React, {useContext} from "react";
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import SkeletonPizzas from "../components/PizzaBlock/SkeletonPizzas";
 import PizzaBlock from "../components/PizzaBlock";
+import { SearchContext } from "../App";
+import Pagination from "../components/Pagination";
 
 
-const HomePage = ({searchValue}) => {
+
+const HomePage = () => {
     const [items, setItems] = React.useState([])
     const [isLoaded, setIsLoaded] = React.useState(true)
     const [categoriesId, setCategoriesActive] = React.useState(0)
     const [selectedSort, setSelectedSort] = React.useState({
         name: 'популярности', sortProperty: 'rating'
     })
-
+    const [currentPage, setCurrentPage] = React.useState(0)
+    const { searchValue } = useContext(SearchContext)
 
     React.useEffect(() => {
 
@@ -23,7 +27,7 @@ const HomePage = ({searchValue}) => {
         const category = categoriesId > 0 ? `category=${categoriesId}` : ''
         const search = searchValue ? `&search=${searchValue}` : ''
 
-        fetch(`https://628169519fac04c654050e3b.mockapi.io/items?${category}&sortBy=${sortType}&order=${order}${search}`)
+        fetch(`https://628169519fac04c654050e3b.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortType}&order=${order}${search}`)
             .then((res) => {
             return res.json()
         }).then((arr) => {
@@ -31,7 +35,8 @@ const HomePage = ({searchValue}) => {
             setIsLoaded(false)
         })
         window.scroll(0, 0)
-    }, [categoriesId, selectedSort,searchValue])
+    }, [categoriesId, selectedSort,searchValue,currentPage])
+
     const pizzas = items.map((pizzas, i) => <PizzaBlock key={i} {...pizzas}/>)
 
     // ФИЛЬТРАЦИЯ БЕЗ БЭКА const pizzas = items.filter((obj) => {
@@ -53,6 +58,7 @@ const HomePage = ({searchValue}) => {
                 {isLoaded ? skeletons : pizzas}
                 <div/>
             </div>
+            <Pagination onChangePage={(number)=>setCurrentPage(number)} />
         </div>
     )
 }
