@@ -3,9 +3,9 @@ import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import SkeletonPizzas from "../components/PizzaBlock/SkeletonPizzas";
 import PizzaBlock from "../components/PizzaBlock";
-import { SearchContext } from "../App";
+import {SearchContext} from "../App";
 import Pagination from "../components/Pagination";
-
+import axios from "axios";
 
 
 const HomePage = () => {
@@ -16,7 +16,7 @@ const HomePage = () => {
         name: 'популярности', sortProperty: 'rating'
     })
     const [currentPage, setCurrentPage] = React.useState(0)
-    const { searchValue } = useContext(SearchContext)
+    const {searchValue} = useContext(SearchContext)
 
     React.useEffect(() => {
 
@@ -27,15 +27,15 @@ const HomePage = () => {
         const category = categoriesId > 0 ? `category=${categoriesId}` : ''
         const search = searchValue ? `&search=${searchValue}` : ''
 
-        fetch(`https://628169519fac04c654050e3b.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortType}&order=${order}${search}`)
-            .then((res) => {
-            return res.json()
-        }).then((arr) => {
-            setItems(arr)
+       
+        axios.get(
+            `https://628169519fac04c654050e3b.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortType}&order=${order}${search}`
+        ).then((response)=>{
+            setItems(response.data)
             setIsLoaded(false)
         })
         window.scroll(0, 0)
-    }, [categoriesId, selectedSort,searchValue,currentPage])
+    }, [categoriesId, selectedSort, searchValue, currentPage])
 
     const pizzas = items.map((pizzas, i) => <PizzaBlock key={i} {...pizzas}/>)
 
@@ -58,7 +58,7 @@ const HomePage = () => {
                 {isLoaded ? skeletons : pizzas}
                 <div/>
             </div>
-            <Pagination onChangePage={(number)=>setCurrentPage(number)} />
+            <Pagination onChangePage={(number) => setCurrentPage(number)}/>
         </div>
     )
 }
