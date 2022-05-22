@@ -1,6 +1,10 @@
 import React from "react";
+import {setSort} from "../store/filterSlice";
+import {useDispatch, useSelector} from "react-redux";
 
-const Sort = ({selectedSort,onClickSetSelectedSort}) => {
+const Sort = () => {
+    const selectedSort = useSelector((state)=>state.filter.sort)
+    const dispatch = useDispatch()
     const sortPopup = [
         {name:'популярности DESC)',sortProperty:'rating'},
         {name:'популярности (ASC)',sortProperty:'-rating'},
@@ -16,8 +20,8 @@ const Sort = ({selectedSort,onClickSetSelectedSort}) => {
     const onIsVisionPopup = () => {
         setIsVisionPopup(!isVisionPopup)
     }
-    const onSelectedSort = (i) => {
-        onClickSetSelectedSort(i)
+    const onSelectedSort = (obj) => {
+        dispatch(setSort(obj))
         setIsVisionPopup(false)
     }
 
