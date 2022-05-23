@@ -2,17 +2,19 @@ import React from "react";
 import {setSort} from "../store/filterSlice";
 import {useDispatch, useSelector} from "react-redux";
 
+export const sortPopup = [
+    {name:'популярности DESC)',sortProperty:'rating'},
+    {name:'популярности (ASC)',sortProperty:'-rating'},
+    {name:'цене (DESC)',sortProperty: 'price'},
+    {name:'цене (ASC)',sortProperty: '-price'},
+    {name:'алфавиту (DESC)',sortProperty:'title'},
+    {name:'алфавиту (ASC)',sortProperty:'-title'},
+
+]
+
 const Sort = () => {
     const selectedSort = useSelector((state)=>state.filter.sort)
     const dispatch = useDispatch()
-    const sortPopup = [
-        {name:'популярности DESC)',sortProperty:'rating'},
-        {name:'популярности (ASC)',sortProperty:'-rating'},
-        {name:'цене (DESC)',sortProperty: 'price'},
-        {name:'цене (ASC)',sortProperty: '-price'},
-        {name:'алфавиту (DESC)',sortProperty:'title'},
-        {name:'алфавиту (ASC)',sortProperty:'-title'},
-    ]
 
     const [isVisionPopup, setIsVisionPopup] = React.useState(false)
 
@@ -24,10 +26,26 @@ const Sort = () => {
         dispatch(setSort(obj))
         setIsVisionPopup(false)
     }
+    const sortRef = React.useRef()
+
+    React.useEffect(()=>{
+        const handleClickOutside = (event) =>{
+            if (!event.path.includes(sortRef.current)){
+                setIsVisionPopup(false)
+
+            }
+        }
+
+        document.body.addEventListener('click',handleClickOutside)
+
+        return () =>{
+            document.body.removeEventListener('click',handleClickOutside)
+        }
+    },[])
 
 
     return (
-        <div className="sort">
+        <div ref={sortRef} className="sort">
             <div className="sort__label">
                 <svg className={isVisionPopup ? 'rotated' : ''}
                     width="10"
