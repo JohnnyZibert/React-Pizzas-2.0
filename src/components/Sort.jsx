@@ -1,5 +1,5 @@
 import React from "react";
-import {setSort} from "../store/filterSlice";
+import {selectSort, setSort} from "../store/filterSlice";
 import {useDispatch, useSelector} from "react-redux";
 
 export const sortPopup = [
@@ -13,7 +13,7 @@ export const sortPopup = [
 ]
 
 const Sort = () => {
-    const selectedSort = useSelector((state)=>state.filter.sort)
+    const selectedSort = useSelector(selectSort)
     const dispatch = useDispatch()
 
     const [isVisionPopup, setIsVisionPopup] = React.useState(false)

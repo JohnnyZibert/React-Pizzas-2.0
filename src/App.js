@@ -8,13 +8,11 @@ import EmptyCart from "./components/EmptyCart";
 import {Route, Routes} from 'react-router-dom'
 import NotFound from "./components/NotFound/NotFound";
 
-export const SearchContext = React.createContext({})
 
 export const App = () => {
-    const [searchValue, setSearchValue] = React.useState('')
+
     return (
         <div className="wrapper">
-            <SearchContext.Provider value={{searchValue,setSearchValue}}>
                 <Header/>
                     <div className="content">
                         <Routes>
@@ -24,7 +22,6 @@ export const App = () => {
                             <Route path='*' element={<NotFound/>}/>
                         </Routes>
                     </div>
-            </SearchContext.Provider>
         </div>
     );
 }
