@@ -6,10 +6,8 @@ import {useDispatch} from "react-redux";
 import {setSearchValue} from "../../store/filterSlice";
 
 
-
-
 const Search = () => {
-    const dispatch = useDispatch
+    const dispatch = useDispatch()
     const [value, setValue] = React.useState('')
     const inputEl = React.useRef(null)
 
@@ -20,13 +18,11 @@ const Search = () => {
     }
 
 
-
-
     const updateSearchValue = React.useCallback(
         debounce((str) => {
-            dispatch(setSearchValue(str))
-        },250),
-        [],
+                dispatch(setSearchValue(str));
+            }, 250),
+                [],
     )
 
 
@@ -38,11 +34,13 @@ const Search = () => {
     return (
         <div className={styles.root}>
             <img src={image.searchIcon} className={styles.icon} alt='search'/>
-            <input ref={inputEl} value={value} placeholder='поиск пицц'  onChange={onChangeValue}
+            <input ref={inputEl} value={value} placeholder='поиск пицц' onChange={onChangeValue}
                    className={styles.input}/>
             {
-                value ? <img onClick={()=>{onButtonCleaner()}} src={image.cleaner} alt='clean' className={styles.cleaner}/>
-                    :''
+                value ? <img onClick={() => {
+                        onButtonCleaner()
+                    }} src={image.cleaner} alt='clean' className={styles.cleaner}/>
+                    : ''
             }
 
         </div>

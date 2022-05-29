@@ -7,7 +7,7 @@ import Pagination from "../components/Pagination";
 import {useDispatch, useSelector} from "react-redux";
 import {selectCategoriesId, selectCurrentPage, selectSort, setCurrentPage, setFilter} from "../store/filterSlice";
 import qs from "query-string";
-import {useLocation, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import {fetchPizzaItems, selectPizzaItems} from "../store/pizzasItemSlice";
 
 
@@ -91,7 +91,8 @@ const HomePage = () => {
         }
     }, [location.search])
 
-    const pizzaItems = items.map((pizzaItems, i) => <PizzaBlock key={i} {...pizzaItems}/>)
+    const pizzaItems = items.map((pizzaItems, i) =>
+        <Link to={`/pizza/${pizzaItems.id}`}><PizzaBlock key={i} {...pizzaItems}/></Link>)
 
 
     // ФИЛЬТРАЦИЯ БЕЗ БЭКА const pizzas = items.filter((obj) => {
