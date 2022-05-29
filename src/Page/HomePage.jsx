@@ -92,7 +92,7 @@ const HomePage = () => {
     }, [location.search])
 
     const pizzaItems = items.map((pizzaItems, i) =>
-        <Link to={`/pizza/${pizzaItems.id}`}><PizzaBlock key={i} {...pizzaItems}/></Link>)
+      <PizzaBlock key={i} {...pizzaItems}/>)
 
 
     // ФИЛЬТРАЦИЯ БЕЗ БЭКА const pizzas = items.filter((obj) => {

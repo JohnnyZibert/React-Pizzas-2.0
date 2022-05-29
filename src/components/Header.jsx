@@ -5,7 +5,7 @@ import {useSelector} from "react-redux";
 import {selectCart} from "../store/cartSlice";
 
 
-const Header = () => {
+const Header:React.FC = () => {
     const {items, totalPrice} = useSelector(selectCart)
     const totalCount = items.reduce((sum, item) => sum + item.count, 0)
     const location = useLocation()

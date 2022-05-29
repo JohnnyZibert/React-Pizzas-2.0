@@ -5,7 +5,7 @@ import Cart from "./components/Cart";
 import EmptyCart from "./components/EmptyCart";
 import {Route, Routes} from 'react-router-dom'
 import NotFound from "./components/NotFound/NotFound";
-import FullPizza from "./Page/FullPizza";
+import FullPizza from "./Page/FullPizza.tsx";
 import MainLayout from "./layout/layoutPizza";
 
 
