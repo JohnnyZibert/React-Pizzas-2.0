@@ -1,8 +1,9 @@
 import {image} from "../assets/img";
 import {Link, NavLink, useLocation} from "react-router-dom";
-import Search from "./search";
+import Search from "./search/index.tsx";
 import {useSelector} from "react-redux";
 import {selectCart} from "../store/cartSlice";
+import * as React from "react";
 
 
 const Header:React.FC = () => {

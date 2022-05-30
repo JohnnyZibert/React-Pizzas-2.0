@@ -1,18 +1,18 @@
 import React, {useRef} from "react";
-import Categories from "../components/Categories";
-import Sort, {sortPopup} from "../components/Sort";
-import SkeletonPizzas from "../components/PizzaBlock/SkeletonPizzas";
-import PizzaBlock from "../components/PizzaBlock";
-import Pagination from "../components/Pagination";
+import Categories from "../components/Categories.tsx";
+import Sort, {sortPopup} from "../components/Sort.tsx";
+import SkeletonPizzas from "../components/PizzaBlock/SkeletonPizzas.tsx";
+import PizzaBlock from "../components/PizzaBlock/index.tsx";
+import Pagination from "../components/Pagination/index.tsx";
 import {useDispatch, useSelector} from "react-redux";
 import {selectCategoriesId, selectCurrentPage, selectSort, setCurrentPage, setFilter} from "../store/filterSlice";
 import qs from "query-string";
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {fetchPizzaItems, selectPizzaItems} from "../store/pizzasItemSlice";
 
 
 
-const HomePage = () => {
+const HomePage:React.FC = () => {
 
     const categoriesId = useSelector(selectCategoriesId)
     const {items, status} = useSelector(selectPizzaItems)

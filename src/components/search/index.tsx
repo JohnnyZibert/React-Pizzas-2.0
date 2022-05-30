@@ -1,20 +1,21 @@
-import React from "react";
+// @ts-ignore
 import styles from './Search.module.scss'
 import {image} from "../../assets/img";
 import {debounce} from "lodash";
 import {useDispatch} from "react-redux";
 import {setSearchValue} from "../../store/filterSlice";
+import * as React from "react";
 
 
-const Search = () => {
+const Search:React.FC = () => {
     const dispatch = useDispatch()
     const [value, setValue] = React.useState('')
-    const inputEl = React.useRef(null)
+    const inputEl = React.useRef<HTMLInputElement>(null)
 
     const onButtonCleaner = () => {
         dispatch(setSearchValue(''))
         setValue('')
-        inputEl.current.focus();
+        inputEl.current?.focus();
     }
 
 
@@ -26,7 +27,7 @@ const Search = () => {
     )
 
 
-    const onChangeValue = (event) => {
+    const onChangeValue = (event:React.ChangeEvent<HTMLInputElement>) => {
         setValue(event.target.value)
         updateSearchValue(event.target.value)
     }

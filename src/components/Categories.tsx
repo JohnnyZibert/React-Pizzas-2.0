@@ -1,15 +1,18 @@
-import React from "react";
+import * as React from "react";
 import {useDispatch} from "react-redux";
 import {setCategory} from "../store/filterSlice";
 
-const Categories = ({categoriesId}) => {
+interface ICategoriesProps {
+    categoriesId: number
+    onClickCategory:(i:number)=>void
+}
+
+
+const Categories:React.FC<ICategoriesProps> = ({ categoriesId }) => {
     const categoriesPizzas = ['Все','Мясные','Вегетарианская','Гриль','Острые','Закрытые']
     const dispatch = useDispatch()
 
 
-   const onClickCategory = (i) => {
-       dispatch(setCategory(i))
-   }
 
     return (
         <div className="categories">
@@ -17,7 +20,7 @@ const Categories = ({categoriesId}) => {
                 {
                     categoriesPizzas.map((categoriesName,i)=><li
                     key={i}
-                    onClick={()=>onClickCategory(i)}
+                    onClick={()=> dispatch(setCategory(i))}
                     className={categoriesId === i ? 'active' : ''}>{categoriesName}</li>)
                 }
             </ul>

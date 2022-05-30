@@ -1,8 +1,8 @@
 import {NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import CartItems from "./CartItems";
+import CartItems from "./CartItems.tsx";
 import {clearItems, selectCart} from "../store/cartSlice";
-import EmptyCart from "./EmptyCart";
+import EmptyCart from "./EmptyCart.tsx";
 
 const Cart = () => {
     const dispatch = useDispatch()

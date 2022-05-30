@@ -21,7 +21,7 @@ const FullPizza:FC = () => {
                 const {data} = await axios.get('https://628169519fac04c654050e3b.mockapi.io/items/' + id)
                 setPizza(data)
             } catch (error) {
-                alert("Ошибка при полeчении пиццы!")
+                alert("Ошибка при получении пиццы!")
                 navigate('/')
             }
         }

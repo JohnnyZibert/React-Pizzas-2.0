@@ -2,6 +2,8 @@ import React from "react";
 import {selectSort, setSort} from "../store/filterSlice";
 import {useDispatch, useSelector} from "react-redux";
 
+
+
 export const sortPopup = [
     {name:'популярности DESC)',sortProperty:'rating'},
     {name:'популярности (ASC)',sortProperty:'-rating'},
@@ -12,7 +14,11 @@ export const sortPopup = [
 
 ]
 
+
 const Sort = () => {
+    type PopupClick = React.MouseEvent<HTMLBodyElement> & {
+        path:Node[]
+    }
     const selectedSort = useSelector(selectSort)
     const dispatch = useDispatch()
 
@@ -26,11 +32,12 @@ const Sort = () => {
         dispatch(setSort(obj))
         setIsVisionPopup(false)
     }
-    const sortRef = React.useRef()
+    const sortRef = React.useRef<HTMLDivElement>(null)
 
     React.useEffect(()=>{
-        const handleClickOutside = (event) =>{
-            if (!event.path.includes(sortRef.current)){
+        const handleClickOutside = (event:MouseEvent) => {
+            const _event=event as PopupClick
+            if (!_event.path.includes(sortRef.current)){
                 setIsVisionPopup(false)
 
             }
