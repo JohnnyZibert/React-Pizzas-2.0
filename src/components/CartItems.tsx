@@ -1,5 +1,5 @@
 import {useDispatch} from "react-redux";
-import {addItem, minusItem, removeItem} from "../store/cartSlice";
+import {addItem, minusItem, removeItem} from "../store/slice/cartSlice";
 import * as React from "react";
 
 interface ICartItemsProps {
@@ -7,7 +7,7 @@ interface ICartItemsProps {
     title:string,
     price:number,
     sizes:number,
-    types:number,
+    types:string,
     imageUrl:string,
     count:number,
 }
@@ -22,7 +22,9 @@ const CartItems: React.FC<ICartItemsProps> = ({id, title, price, sizes, types, i
         }))
     }
     const onClickMinusItem = () => {
-        dispatch(minusItem({id}))
+        dispatch(minusItem(
+            id
+        ))
     }
     const onClickRemoveItem = () => {
         if (window.confirm("Вы действительно хотите удалить пиццу?")) {

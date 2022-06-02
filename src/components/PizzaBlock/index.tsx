@@ -1,15 +1,16 @@
 import {useDispatch, useSelector} from "react-redux";
-import {addItem, selectCartItemById} from "../../store/cartSlice";
+import {addItem, ICartItem, selectCartItemById} from "../../store/slice/cartSlice";
 import {Link} from "react-router-dom";
 import * as React from "react";
 
-interface IPizzaBlockProps {
+export interface IPizzaBlockProps {
     id: string,
     title: string,
     price: number,
     sizes: number[],
     types: number[],
     imageUrl: string,
+    count:number,
 }
 
 const PizzaBlock:React.FC<IPizzaBlockProps> = ({
@@ -18,23 +19,25 @@ const PizzaBlock:React.FC<IPizzaBlockProps> = ({
                                                     price,
                                                     sizes,
                                                     types,
-                                                    imageUrl
+                                                    imageUrl,
+
                                                 }) => {
     const typesName = ['тонкое', 'традиционное ']
     const [activeTypes, setActiveTypes] = React.useState(0)
     const [activeSize, setActiveSize] = React.useState(0)
     const dispatch = useDispatch()
     const cartItem = useSelector(selectCartItemById(id))
-    const addedCartItem = cartItem ? cartItem.count : ''
+    const addedCartItem = cartItem ? cartItem.count : 0
 
-    const onClickAddItems: React.MouseEventHandler<HTMLLIElement> = () => {
-        const items = {
+    const onClickAddItems: React.MouseEventHandler<HTMLButtonElement> = () => {
+        const items:ICartItem = {
             id,
             title,
             price,
             imageUrl,
-            types: typesName[setActiveTypes],
+            types: typesName[activeTypes],
             sizes: sizes[activeSize],
+            count:0,
         };
         dispatch(addItem(items))
     }

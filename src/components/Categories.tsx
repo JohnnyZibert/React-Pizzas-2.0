@@ -1,10 +1,9 @@
 import * as React from "react";
 import {useDispatch} from "react-redux";
-import {setCategory} from "../store/filterSlice";
+import {setCategory} from "../store/slice/filterSlice";
 
-interface ICategoriesProps {
+export interface ICategoriesProps {
     categoriesId: number
-    onClickCategory:(i:number)=>void
 }
 
 

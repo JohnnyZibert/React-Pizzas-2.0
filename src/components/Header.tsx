@@ -1,8 +1,8 @@
 import {image} from "../assets/img";
 import {Link, NavLink, useLocation} from "react-router-dom";
-import Search from "./search/index.tsx";
+import Search from "./search/index";
 import {useSelector} from "react-redux";
-import {selectCart} from "../store/cartSlice";
+import {selectCart} from "../store/slice/cartSlice";
 import * as React from "react";
 
 

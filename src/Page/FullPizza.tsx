@@ -1,7 +1,7 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {FC} from "react";
+import * as React from "react";
 
 interface IPizzaData {
 imageUrl: string,
@@ -9,7 +9,7 @@ imageUrl: string,
     price: number
 }
 
-const FullPizza:FC = () => {
+const FullPizza:React.FC = () => {
     const [pizza, setPizza] = useState<IPizzaData>()
     const { id } = useParams()
 

@@ -1,31 +1,41 @@
-import React, {useRef} from "react";
-import Categories from "../components/Categories.tsx";
-import Sort, {sortPopup} from "../components/Sort.tsx";
-import SkeletonPizzas from "../components/PizzaBlock/SkeletonPizzas.tsx";
-import PizzaBlock from "../components/PizzaBlock/index.tsx";
-import Pagination from "../components/Pagination/index.tsx";
-import {useDispatch, useSelector} from "react-redux";
-import {selectCategoriesId, selectCurrentPage, selectSort, setCurrentPage, setFilter} from "../store/filterSlice";
-import qs from "query-string";
+import { useRef } from "react";
+import Categories from "../components/Categories";
+import Sort, {sortPopup} from "../components/Sort";
+import SkeletonPizzas from "../components/PizzaBlock/SkeletonPizzas";
+import PizzaBlock from "../components/PizzaBlock/index";
+import Pagination from "../components/Pagination/index";
+import { useSelector} from "react-redux";
+import {
+    selectCategoriesId,
+    selectCurrentPage, selectSearch,
+    setCurrentPage,
+    setFilter, sortFilter
+} from "../store/slice/filterSlice";
+import qs from 'qs'
 import {useLocation, useNavigate} from "react-router-dom";
-import {fetchPizzaItems, selectPizzaItems} from "../store/pizzasItemSlice";
+import {fetchPizzaItems, ISearchPizzaParams, selectPizzaItems, Status} from "../store/slice/pizzasItemSlice";
+import {useAppDispatch} from "../store/store";
+import * as React from "react";
+import {selectCart, selectCartItemById} from "../store/slice/cartSlice";
 
 
 
-const HomePage:React.FC = () => {
+const HomePage: React.FC = () => {
 
     const categoriesId = useSelector(selectCategoriesId)
     const {items, status} = useSelector(selectPizzaItems)
-    const selectedSort = useSelector(selectSort)
+    const sort = useSelector(sortFilter)
     const currentPage = useSelector(selectCurrentPage)
-    const {searchValue} = useSelector((state)=>state.filter)
+    const {searchValue} = useSelector(selectSearch)
+    const {count} = useSelector(selectCart)
 
-    const dispatch = useDispatch()
+
+
+    const dispatch = useAppDispatch()
 
     const location = useLocation()
     const inMounted = useRef(false)
     const navigate = useNavigate();
-
 
 
     const onChangePage = (number) => {
@@ -34,18 +44,19 @@ const HomePage:React.FC = () => {
 
     const getPizza = async () => {
 
-        const sortType = selectedSort.sortProperty.replace('-', '')
-        const order = selectedSort.sortProperty.includes('-') ? 'asc' : 'desc'
-        const category = categoriesId > 0 ? `category=${categoriesId}` : ''
+        const sortBy = sort.sortProperty.replace('-', '')
+        const order = sort.sortProperty.includes('-') ? 'asc' : 'desc'
+        const category = categoriesId > 0 ? String(categoriesId) : ''
         const search = searchValue ? `&search=${searchValue}` : ''
 
 
         dispatch(fetchPizzaItems({
-            sortType,
+            sortBy,
             order,
             category,
             search,
-            currentPage
+            currentPage: String(currentPage)
+
         }))
 
 
@@ -57,30 +68,32 @@ const HomePage:React.FC = () => {
     React.useEffect(() => {
         if (inMounted.current) {
             const params = {
-                categoriesId: categoriesId > 0 ? categoriesId : null,
-                selectedSort: selectedSort.sortProperty,
+                category: categoriesId > 0 ? categoriesId : null,
+                selectedSort: sort.sortProperty,
                 currentPage
             }
             const queryString = qs.stringify(params, {skipNulls: true})
             navigate(`/?${queryString}`)
         }
-    }, [categoriesId, selectedSort, searchValue, currentPage, navigate])
+    }, [categoriesId, sortPopup, searchValue, currentPage, navigate])
 
-    //если был первый рендер, то запрашиваем пиццы
+    // если был первый рендер, то запрашиваем пиццы
     React.useEffect(() => {
         getPizza()
-    }, [categoriesId, selectedSort, searchValue, currentPage])
+    }, [categoriesId, sort, searchValue, currentPage])
 
-
-// если был первый рендер то проверяем url и сохраняем в редакс
+//
+// // если был первый рендер то проверяем url и сохраняем в редакс
     React.useEffect(() => {
         if (window.location.search) {
-            const params = qs.parse(window.location.search.substring(1))
-            const sort = sortPopup.find(obj => obj.sortProperty === params.selectedSort)
-            if (sort) {
-                params.sort = sort
-            }
-            dispatch(setFilter(params))
+            const params = qs.parse(window.location.search.substring(1)) as unknown as ISearchPizzaParams
+            const sort = sortPopup.find(obj => obj.sortProperty === params.sortBy)
+            dispatch(setFilter({
+                searchValue: String(params.search),
+                categoryId: Number(params.category),
+                currentPage: Number(params.currentPage),
+                sort: sort ? sort : sortPopup[0],
+            }))
         }
         inMounted.current = true
     }, [])
@@ -92,7 +105,7 @@ const HomePage:React.FC = () => {
     }, [location.search])
 
     const pizzaItems = items.map((pizzaItems, i) =>
-      <PizzaBlock key={i} {...pizzaItems}/>)
+        <PizzaBlock key={i}  {...pizzaItems}/>)
 
 
     // ФИЛЬТРАЦИЯ БЕЗ БЭКА const pizzas = items.filter((obj) => {
@@ -105,18 +118,18 @@ const HomePage:React.FC = () => {
     return (
         <div className="container">
             <div className="content__top">
-                <Categories categoriesId={categoriesId}/>
+                <Categories categoriesId={categoriesId} />
                 <Sort/>
             </div>
             <h2 className="content__title">Все пиццы</h2>
-                {
-                    status === 'error' ? <div className="content__error-info">
-                        <h2>Произошла ошибка 😕</h2>
-                        <p>К сожалению данная страница недоступна, повторите позже</p>
-                        </div> : <div className='content__items'>{status === ' loading' ? skeletons : pizzaItems}</div>
-                }
+            {
+                status === 'error' ? <div className="content__error-info">
+                    <h2>Произошла ошибка 😕</h2>
+                    <p>К сожалению данная страница недоступна, повторите позже</p>
+                </div> : <div className='content__items'>{status === Status.LOADING ? skeletons : pizzaItems}</div>
+            }
 
-                <div/>
+            <div/>
             <Pagination currentPage={currentPage} onChangePage={onChangePage}/>
         </div>
     )

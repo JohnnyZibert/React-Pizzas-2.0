@@ -1,15 +1,16 @@
-import React from 'react';
+
 import './scss/app.scss';
-import HomePage from "./Page/HomePage.tsx";
-import Cart from "./components/Cart.tsx";
-import EmptyCart from "./components/EmptyCart.tsx";
+import HomePage from "./Page/HomePage";
+import Cart from "./components/Cart";
+import EmptyCart from "./components/EmptyCart";
 import {Route, Routes} from 'react-router-dom'
-import NotFound from "./components/NotFound/NotFound.tsx";
-import FullPizza from "./Page/FullPizza.tsx";
-import MainLayout from "./layout/layoutPizza.tsx";
+import NotFound from "./components/NotFound/NotFound";
+import FullPizza from "./Page/FullPizza";
+import MainLayout from "./layout/layoutPizza";
+import * as React from "react";
 
 
-export const App = () => {
+export const App:React.FC = () => {
 
     return (
         <Routes>

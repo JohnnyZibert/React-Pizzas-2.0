@@ -1,5 +1,5 @@
 import {image} from "../assets/img";
-import React from "react";
+import * as React from "react";
 
 
 const EmptyCart:React.FC = () => {

@@ -1,26 +1,27 @@
-import React from "react";
-import {selectSort, setSort} from "../store/filterSlice";
+import {ISortFilter, setSort, sortFilter, SortPropertyEnum} from "../store/slice/filterSlice";
 import {useDispatch, useSelector} from "react-redux";
+import * as React from "react";
 
 
 
-export const sortPopup = [
-    {name:'популярности DESC)',sortProperty:'rating'},
-    {name:'популярности (ASC)',sortProperty:'-rating'},
-    {name:'цене (DESC)',sortProperty: 'price'},
-    {name:'цене (ASC)',sortProperty: '-price'},
-    {name:'алфавиту (DESC)',sortProperty:'title'},
-    {name:'алфавиту (ASC)',sortProperty:'-title'},
+export const sortPopup:ISortFilter[] = [
+    {name:'популярности DESC)',sortProperty:SortPropertyEnum.RATING_DES},
+    {name:'популярности (ASC)',sortProperty:SortPropertyEnum.RATING_ASC},
+    {name:'цене (DESC)',sortProperty:SortPropertyEnum.PRICE_DES},
+    {name:'цене (ASC)',sortProperty: SortPropertyEnum.PRICE_ASC},
+    {name:'алфавиту (DESC)',sortProperty:SortPropertyEnum.TITLE_DES},
+    {name:'алфавиту (ASC)',sortProperty:SortPropertyEnum.TITLE_ASC},
 
 ]
+type PopupClick = React.MouseEvent<HTMLBodyElement> & {
+    path:Node[]
+}
 
+const Sort:React.FC = () => {
 
-const Sort = () => {
-    type PopupClick = React.MouseEvent<HTMLBodyElement> & {
-        path:Node[]
-    }
-    const selectedSort = useSelector(selectSort)
+    const sort = useSelector(sortFilter)
     const dispatch = useDispatch()
+    const sortRef = React.useRef<HTMLDivElement>(null)
 
     const [isVisionPopup, setIsVisionPopup] = React.useState(false)
 
@@ -32,11 +33,11 @@ const Sort = () => {
         dispatch(setSort(obj))
         setIsVisionPopup(false)
     }
-    const sortRef = React.useRef<HTMLDivElement>(null)
+
 
     React.useEffect(()=>{
         const handleClickOutside = (event:MouseEvent) => {
-            const _event=event as PopupClick
+            const _event= event as unknown as PopupClick
             if (!_event.path.includes(sortRef.current)){
                 setIsVisionPopup(false)
 
@@ -67,14 +68,14 @@ const Sort = () => {
                     />
                 </svg>
                 <b>Сортировка по:</b>
-                <span onClick={() => onIsVisionPopup()}>{selectedSort.name}</span>
+                <span onClick={() => onIsVisionPopup()}>{sort.name}</span>
             </div>
             {isVisionPopup && <div className="sort__popup">
                 <ul>
                     {
                         sortPopup.map((obj, i) => <li
                             key={i}
-                            className={selectedSort.sortProperty === obj.sortProperty ? 'active' : ''}
+                            className={sort.sortProperty === obj.sortProperty ? 'active' : ''}
                             onClick={() => onSelectedSort(obj)}>{obj.name}</li>)
                     }
 
