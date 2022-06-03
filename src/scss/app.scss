@@ -27,17 +27,17 @@ body {
   &__error-info {
     width: 500px;
     text-align: center;
-    margin: 50px auto ;
+    margin: 50px auto;
 
   }
 
-  h2{
+  h2 {
     font-size: 32px;
     font-weight: 700;
     margin-bottom: 10px;
   }
 
-  p{
+  p {
     font-size: 20px;
   }
 
@@ -230,6 +230,22 @@ body {
             display: none;
           }
         }
+
+        &:disabled {
+          opacity: 0.4;
+          border-color: #424141;
+          &:active {
+            transform: none;
+          }
+
+          &:hover {
+            background-color: transparent;
+            }
+          svg path {
+            fill: #787878
+          }
+        }
+
       }
 
       b {

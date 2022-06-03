@@ -1,5 +1,5 @@
 import {useDispatch} from "react-redux";
-import {addItem, minusItem, removeItem} from "../store/slice/cartSlice";
+import {addItem, minusItem, removeItem} from "../store/cart/CartSlice";
 import * as React from "react";
 
 interface ICartItemsProps {
@@ -25,6 +25,7 @@ const CartItems: React.FC<ICartItemsProps> = ({id, title, price, sizes, types, i
         dispatch(minusItem(
             id
         ))
+
     }
     const onClickRemoveItem = () => {
         if (window.confirm("Вы действительно хотите удалить пиццу?")) {
@@ -46,7 +47,8 @@ const CartItems: React.FC<ICartItemsProps> = ({id, title, price, sizes, types, i
                 <p>{types}, {sizes} см.</p>
             </div>
             <div className="cart__item-count">
-                <div onClick={onClickMinusItem}
+                <button onClick={onClickMinusItem}
+                        disabled={count === 1}
                      className="button button--outline button--circle cart__item-count-minus">
                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
                          xmlns="http://www.w3.org/2000/svg">
@@ -58,7 +60,7 @@ const CartItems: React.FC<ICartItemsProps> = ({id, title, price, sizes, types, i
                             fill="#EB5A1E"/>
                     </svg>
 
-                </div>
+                </button>
                 <b>{count}</b>
                 <div onClick={onClickPlusItem} className="button button--outline button--circle cart__item-count-plus">
                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none"

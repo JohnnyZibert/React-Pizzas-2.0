@@ -1,7 +1,9 @@
 import {useDispatch, useSelector} from "react-redux";
-import {addItem, ICartItem, selectCartItemById} from "../../store/slice/cartSlice";
+import {addItem } from "../../store/cart/CartSlice";
 import {Link} from "react-router-dom";
 import * as React from "react";
+import {selectCartItemById} from "../../store/cart/Selectors";
+import {ICartItem} from "../../store/cart/Types";
 
 export interface IPizzaBlockProps {
     id: string,

@@ -3,8 +3,8 @@ import styles from './Search.module.scss'
 import {image} from "../../assets/img";
 import {debounce} from "lodash";
 import {useDispatch} from "react-redux";
-import {setSearchValue} from "../../store/slice/filterSlice.tsx";
 import * as React from "react";
+import {setSearchValue} from "../../store/filter/FilterSlice";
 
 
 const Search:React.FC = () => {

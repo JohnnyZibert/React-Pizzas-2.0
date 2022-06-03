@@ -2,14 +2,25 @@ import {image} from "../assets/img";
 import {Link, NavLink, useLocation} from "react-router-dom";
 import Search from "./search/index";
 import {useSelector} from "react-redux";
-import {selectCart} from "../store/slice/cartSlice";
 import * as React from "react";
+import {selectCart} from "../store/cart/Selectors";
+import {useRef} from "react";
 
 
-const Header:React.FC = () => {
+const Header: React.FC = () => {
     const {items, totalPrice} = useSelector(selectCart)
     const totalCount = items.reduce((sum, item) => sum + item.count, 0)
     const location = useLocation()
+    const isMounted = useRef(false)
+
+    React.useEffect(() => {
+        if (isMounted.current) {
+            const json = JSON.stringify(items)
+            localStorage.setItem('cart', json)
+        }
+
+        isMounted.current = true
+    }, [items])
 
     return (
         <div className="header">
@@ -23,7 +34,7 @@ const Header:React.FC = () => {
                         </div>
                     </div>
                 </Link>
-                <Search/>
+                {location.pathname !== '/cart' && <Search/>}
                 <div className="header__cart">
                     {
                         location.pathname !== '/cart' &&

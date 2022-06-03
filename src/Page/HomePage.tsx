@@ -7,16 +7,16 @@ import Pagination from "../components/Pagination/index";
 import { useSelector} from "react-redux";
 import {
     selectCategoriesId,
-    selectCurrentPage, selectSearch,
-    setCurrentPage,
-    setFilter, sortFilter
-} from "../store/slice/filterSlice";
+    selectCurrentPage, selectSearch, sortFilter
+} from "../store/filter/Selectors";
 import qs from 'qs'
 import {useLocation, useNavigate} from "react-router-dom";
-import {fetchPizzaItems, ISearchPizzaParams, selectPizzaItems, Status} from "../store/slice/pizzasItemSlice";
+import {ISearchPizzaParams, Status} from "../store/pizzaSlice/types";
 import {useAppDispatch} from "../store/store";
 import * as React from "react";
-import {selectCart, selectCartItemById} from "../store/slice/cartSlice";
+import {selectPizzaItems} from "../store/pizzaSlice/Selectors";
+import {setCategory, setCurrentPage, setFilter} from "../store/filter/FilterSlice";
+import {fetchPizzaItems} from "../store/pizzaSlice/asyncAction";
 
 
 
@@ -27,7 +27,7 @@ const HomePage: React.FC = () => {
     const sort = useSelector(sortFilter)
     const currentPage = useSelector(selectCurrentPage)
     const {searchValue} = useSelector(selectSearch)
-    const {count} = useSelector(selectCart)
+
 
 
 
@@ -37,6 +37,11 @@ const HomePage: React.FC = () => {
     const inMounted = useRef(false)
     const navigate = useNavigate();
 
+  const onChangeCategories = React.useCallback((i:number) => {
+           dispatch(setCategory(i))
+       },[]
+
+   )
 
     const onChangePage = (number) => {
         dispatch(setCurrentPage(number))
@@ -118,7 +123,7 @@ const HomePage: React.FC = () => {
     return (
         <div className="container">
             <div className="content__top">
-                <Categories categoriesId={categoriesId} />
+                <Categories categoriesId={categoriesId}  onChangeCategories={onChangeCategories}/>
                 <Sort/>
             </div>
             <h2 className="content__title">Все пиццы</h2>
