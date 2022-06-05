@@ -14,7 +14,7 @@ const EmptyCart:React.FC = () => {
                                 Для того, чтобы заказать пиццу, перейди на главную страницу.
                             </p>
                             <img src={image.emptyCart} alt="Empty cart"/>
-                            <a href="/" className="button button--black">
+                            <a href="/react/Pizza/my-app/public" className="button button--black">
                                 <span>Вернуться назад</span>
                             </a>
                         </div>

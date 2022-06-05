@@ -1,4 +1,3 @@
-// @ts-ignore
 import styles from './Search.module.scss'
 import {image} from "../../assets/img";
 import {debounce} from "lodash";
@@ -7,7 +6,7 @@ import * as React from "react";
 import {setSearchValue} from "../../store/filter/FilterSlice";
 
 
-const Search:React.FC = () => {
+export const Search:React.FC = () => {
     const dispatch = useDispatch()
     const [value, setValue] = React.useState('')
     const inputEl = React.useRef<HTMLInputElement>(null)
@@ -48,4 +47,3 @@ const Search:React.FC = () => {
 
     )
 }
-export default Search

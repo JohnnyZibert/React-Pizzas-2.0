@@ -8,7 +8,7 @@ interface IPaginationProps {
     onChangePage:(page:number) => void
 }
 
-const Pagination:React.FC<IPaginationProps> = ({currentPage,onChangePage}) => {
+export const Pagination:React.FC<IPaginationProps> = ({currentPage,onChangePage}) => {
 
 
     return (
@@ -26,4 +26,3 @@ const Pagination:React.FC<IPaginationProps> = ({currentPage,onChangePage}) => {
         </div>
     )
 }
-export default Pagination

@@ -12,10 +12,11 @@ export interface IPizzaBlockProps {
     sizes: number[],
     types: number[],
     imageUrl: string,
-    count:number,
+
+
 }
 
-const PizzaBlock:React.FC<IPizzaBlockProps> = ({
+export const PizzaBlock:React.FC<IPizzaBlockProps> = ({
                                                     id,
                                                     title,
                                                     price,
@@ -94,4 +95,3 @@ const PizzaBlock:React.FC<IPizzaBlockProps> = ({
     )
 }
 
-export default PizzaBlock

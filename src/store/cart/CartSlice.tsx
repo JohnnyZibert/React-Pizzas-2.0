@@ -4,7 +4,7 @@ import {getCartItemLS} from "../../utils/getCartItemFromLS";
 import {calcTotalPrice} from "../../utils/calcTotalPrice";
 
 
-const {items,totalPrice } = getCartItemLS()
+const {items, totalPrice} = getCartItemLS()
 
 const initialState: ICart = {
     totalPrice: totalPrice,
@@ -34,6 +34,8 @@ export const cartSlice = createSlice({
             if (findItem) {
                 findItem.count--
             }
+            state.totalPrice = calcTotalPrice(state.items)
+
         },
 
         removeItem: (state, action: PayloadAction<string>) => {

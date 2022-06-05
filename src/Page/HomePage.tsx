@@ -1,9 +1,7 @@
 import { useRef } from "react";
-import Categories from "../components/Categories";
-import Sort, {sortPopup} from "../components/Sort";
+import {sortPopup} from "../components";
 import SkeletonPizzas from "../components/PizzaBlock/SkeletonPizzas";
-import PizzaBlock from "../components/PizzaBlock/index";
-import Pagination from "../components/Pagination/index";
+import {PizzaBlock,Pagination,Sort,Categories} from "../components";
 import { useSelector} from "react-redux";
 import {
     selectCategoriesId,
@@ -17,6 +15,7 @@ import * as React from "react";
 import {selectPizzaItems} from "../store/pizzaSlice/Selectors";
 import {setCategory, setCurrentPage, setFilter} from "../store/filter/FilterSlice";
 import {fetchPizzaItems} from "../store/pizzaSlice/asyncAction";
+
 
 
 
@@ -46,6 +45,10 @@ const HomePage: React.FC = () => {
     const onChangePage = (number) => {
         dispatch(setCurrentPage(number))
     }
+    import("../utils/math").then(math => {
+        console.log(math.add(16, 26));
+    });
+
 
     const getPizza = async () => {
 
@@ -110,7 +113,7 @@ const HomePage: React.FC = () => {
     }, [location.search])
 
     const pizzaItems = items.map((pizzaItems, i) =>
-        <PizzaBlock key={i}  {...pizzaItems}/>)
+        <PizzaBlock key={i} {...pizzaItems}/>)
 
 
     // ФИЛЬТРАЦИЯ БЕЗ БЭКА const pizzas = items.filter((obj) => {

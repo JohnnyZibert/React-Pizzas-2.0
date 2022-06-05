@@ -12,7 +12,7 @@ interface ICartItemsProps {
     count:number,
 }
 
-const CartItems: React.FC<ICartItemsProps> = ({id, title, price, sizes, types, imageUrl, count}) => {
+export const CartItems: React.FC<ICartItemsProps> = ({id, title, price, sizes, types, imageUrl, count}) => {
     const dispatch = useDispatch()
 
 
@@ -96,5 +96,3 @@ const CartItems: React.FC<ICartItemsProps> = ({id, title, price, sizes, types, i
     </div>)
 
 }
-
-export default CartItems

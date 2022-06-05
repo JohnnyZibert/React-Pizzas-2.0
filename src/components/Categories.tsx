@@ -7,7 +7,7 @@ export interface ICategoriesProps {
 }
 
 
-const Categories: React.FC<ICategoriesProps> = React.memo(({categoriesId, onChangeCategories}) => {
+export const Categories: React.FC<ICategoriesProps> = React.memo(({categoriesId, onChangeCategories}) => {
         const categoriesPizzas = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']
 
 
@@ -26,4 +26,3 @@ const Categories: React.FC<ICategoriesProps> = React.memo(({categoriesId, onChan
         )
     }
 )
-export default Categories

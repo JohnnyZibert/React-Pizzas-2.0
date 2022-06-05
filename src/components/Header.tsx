@@ -1,13 +1,13 @@
 import {image} from "../assets/img";
 import {Link, NavLink, useLocation} from "react-router-dom";
-import Search from "./search/index";
+import {Search} from "./Search/index";
 import {useSelector} from "react-redux";
 import * as React from "react";
 import {selectCart} from "../store/cart/Selectors";
 import {useRef} from "react";
 
 
-const Header: React.FC = () => {
+export const Header: React.FC = () => {
     const {items, totalPrice} = useSelector(selectCart)
     const totalCount = items.reduce((sum, item) => sum + item.count, 0)
     const location = useLocation()
@@ -78,4 +78,3 @@ const Header: React.FC = () => {
         </div>
     )
 }
-export default Header
